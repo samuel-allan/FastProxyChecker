@@ -1,4 +1,8 @@
 <?php
+/*
+Please note - Do not use this script after 11/16/2015 When a new verion will be released
+*/
+
 $useonly = false;
 $disabled = false;
 foreach($argv as $arg)
