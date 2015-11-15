@@ -180,6 +180,11 @@ Version 1.0 | N/A | Very Outdated | [Old Docs](https://github.com/samuel-allan/F
 _No bugs present yet_
 
 ###Credits
+
+This line is also a separate paragraph, but...
+This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
+
+
 **Samuel Allan** for creating and maintaining the code.
 Email : naclo3samuel@gmail.com
 
