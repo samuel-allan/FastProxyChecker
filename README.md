@@ -14,7 +14,7 @@ Locate the _**checker.php**_ script, and GET it with the parameters ip, port and
 This code will check the proxy 1.2.3.4:80 with a timeout of 20 seconds.
 Results are returned in JSON format:
 
-```javascript
+```json
 {
     "result": {
         "success": true,
