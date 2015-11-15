@@ -171,9 +171,9 @@ As you can see from the json, it has an array of 'results' with results for each
 
 ###All Version References
 Version number | Working | Bug Rating | Documentation
--------- | -------- | -------- | --------
-Version 1.1 | Yes | No Bugs Found | (Top of page)[#]
-Version 1.0 | N/A | Very Outdated | (Old Docs)[https://github.com/samuel-allan/FastProxyChecker/blob/master/Version%201/Documentation]
+----------- | ----------- | ----------- | -----------
+Version 1.1 | Yes | No Bugs Found | [Top of page](#)
+Version 1.0 | N/A | Very Outdated | [Old Docs](https://github.com/samuel-allan/FastProxyChecker/blob/master/Version%201/Documentation)
 
 ###Current flaws in 1.1
 -[ ] Can't handle SOCKS proxies (Returns operation timed out error)
