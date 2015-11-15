@@ -154,33 +154,27 @@ As you can see from the json, it has an array of 'results' with results for each
 
 
 
-##Changelog for upcoming versions
-**Version 1.2**
+##Version Information
+###Upcoming versions
+**Version 1.2** *(Estimated release date : Nov 20 2015)*
 - Will have a version supporting includes (as a library)
 - Adding proxy annonimity tests
 - Will start supporting SOCKS proxies
 
-##Changelog for new versions
-**Version 1.1**
-- Dropped command-line support, now using a browser-approach
-- Switched to stable and working methods (100% accurate)
+###Changelogs for currently active versions
+**Version 1.1** *(Updated from Version 1.0)*
+- Dropped command-line support, now using a browser-approach (GET Requests)
+- Switched to stable and working methods (100% accurate proxy checks)
 - Increased speed and multi-threading ability
+- Added support for checking single proxies individually
+- You can now specify a custom `timeout`
 
-##Version 1.1 Reference
+###All Version References
+Version number | Working | Bug Rating | Documentation
+-------- | -------- | -------- | --------
+Version 1.1 | Yes | No Bugs Found | (Top of page)[#]
+Version 1.0 | N/A | Very Outdated | (Old Docs)[https://github.com/samuel-allan/FastProxyChecker/blob/master/Version%201/Documentation]
 
-##Known bugs in V1.1
-1.  Can't handle SOCKS proxies (Returns 'Operation Timed Out' errors)
-
-If you find any other bugs, please report them as an issue, or simply email me at work@samuelallan.info with the details.
-
-##OLD Version Reference
-**Version 1**
-
-This version was entirely command-line only, and does not support any of the new features.
-Use via command line:
-
-$php index.php proxylist.txt 500 1 -nolicense -useonly
-
-Recommended timeout is 1. Command line arguments as follow:
-
-$php index.php [Proxy List File fmt PROXY:PORT] [Number of Threads 50-500 recommended] [timeout in seconds, 1 recommended] [-nolicense if you don't want to display the guff about license] [-useonly if you don't want the "-----" stuff]
+###Current flaws in 1.1
+-[ ] Can't handle SOCKS proxies (Returns operation timed out error)
+_No bugs present yet_
