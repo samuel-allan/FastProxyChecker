@@ -181,11 +181,13 @@ _No bugs present yet_
 
 ###Credits
 
-> Me(@samuel-allan) for creating and maintaining the code.
+> **Me**_(Samuel Allan)_ for creating and maintaining the code.
+
 > **W. Al Maawali** for the script that V1.1 was built on.
+
 > **Miyachung** for creating the script that V1.0 was wrapped around.
 
-**Links**
+###Links
 You can contact me (*Samuel Allan*) by email at _naclo3samuel@gmail.com_
 
 **W. Al Maawali** - [Link to the script that made V1.1 possible](https://www.digi77.com/validating-proxy-via-php/)
