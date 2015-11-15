@@ -181,17 +181,14 @@ _No bugs present yet_
 
 ###Credits
 
-This line is also a separate paragraph, but...
-This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
+> Me(@samuel-allan) for creating and maintaining the code.
+> **W. Al Maawali** for the script that V1.1 was built on.
+> **Miyachung** for creating the script that V1.0 was wrapped around.
 
+**Links**
+You can contact me (*Samuel Allan*) by email at _naclo3samuel@gmail.com_
 
-**Samuel Allan** for creating and maintaining the code.
-Email : naclo3samuel@gmail.com
+**W. Al Maawali** - [Link to the script that made V1.1 possible](https://www.digi77.com/validating-proxy-via-php/)
 
-**W. Al Maawali** for the script that V1.1 was built on.
-[Original Script](https://www.digi77.com/validating-proxy-via-php/)
-
-**Miyachung** for creating the script that V1.0 was wrapped around.
-_Email : Miyachung@hotmail.com_
-
+You can contact **Miyachung** by email at _Miyachung@hotmail.com_
 
