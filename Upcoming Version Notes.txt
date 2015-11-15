@@ -1,0 +1,9 @@
+The big update is going to arrive here soon!
+Version 1.1 will feature many big changes to the way the script works, 
+and will hopefully fix any existing problems.
+
+Here are all the changes:
+- Dropping command-line support
+- Can be used as an include
+- Can be used directly (script.php?ip=127.0.0.1&port=3127) or (script.php?file=proxies.txt)
+
