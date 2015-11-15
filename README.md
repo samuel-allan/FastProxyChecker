@@ -9,7 +9,9 @@ So, currently there are two ways to check proxies:
 ###Checking a specific proxy
 Locate the _**checker.php**_ script, and GET it with the parameters ip, port and timeout:
 
-*checker.php?ip=1.2.3.4&port=80&timeout=20*
+```
+checker.php?ip=1.2.3.4&port=80&timeout=20
+```
 
 This code will check the proxy 1.2.3.4:80 with a timeout of 20 seconds.
 Results are returned in JSON format:
