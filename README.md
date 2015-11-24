@@ -52,7 +52,7 @@ This feature works best if you supply a file with a list of proxies in it (Most 
 To check a list of proxies contained in file `abc.txt` with a timeout of 20 seconds:
 
 ```
-localhost/checker.php?file=proxylist.txt&timeout=20
+localhost/checker.php?file=abc.txt&timeout=20
 ```
 
 This uses multi-threading and hence instead of taking 200 seconds for 10 proxies 
