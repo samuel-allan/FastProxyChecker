@@ -160,7 +160,7 @@ However, the results are going to be a bit different this time, because you've c
 As you can see from the json, it has an array of 'results' with results for each and every proxy in the list.
 
 #### SOCKS Proxy support in big lists `Only in Version 1.2` 
-See note above about [SOCKS proxy support](#checking-socks-proxies-only-in-version-1.2).
+See note above about [SOCKS proxy support](#checking-socks-proxies-only-in-version-12).
 
 Same principal applies to big lists (multi-threaded checking).
  
