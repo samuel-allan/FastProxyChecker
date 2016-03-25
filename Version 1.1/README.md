@@ -1,10 +1,8 @@
 # Fast Proxy Checker Script
-*(Announcement): Version 1.2 has finally been released, and includes new features as well as fixes and performance updates*
+*(Short Notice 3/25/3016): Version 1.2 is available, and should be stable enough to use by the end of March. I recommend everyone in need of SOCKS proxy support to upgrade to version 1.2
 
 ## How to use
-The current latest and most feature-rich version is 1.2, although you are free to use version 1.1 if you don't need the new features.
-
-So, currently there are two ways to check proxies:
+Currently there are two ways to check proxies:
 - Check a specific proxy (IP:PORT)
 - Check a big list of proxies simultaneously (multi-threaded approach)
 
@@ -44,14 +42,6 @@ And in the case of faliure you will get the reason why it failed (curl_error dir
       }
    }
 }
-```
-
-#### Checking SOCKS Proxies `Only in Version 1.2`
-If you are using version 1.2 you will also be able to check SOCKS4/5 proxies. In version 1.2 the proxy is checked for SOCKS by default after it has partially failed a check for HTTP (Connection reset error), however knowing for sure whether it is a SOCKS proxy you are about to check or no can minimise the time it will take to process.
-
-To check the proxy for SOCKS only use the `proxy_type` GET parameter:
-```
-localhost/checker.php?ip=201.173.168.52&port=10000&timeout=20&proxy_type=socks
 ```
 
 ### Checking a big list of proxies with multi-threading enabled
@@ -159,48 +149,14 @@ However, the results are going to be a bit different this time, because you've c
 
 As you can see from the json, it has an array of 'results' with results for each and every proxy in the list.
 
-#### SOCKS Proxy support in big lists `Only in Version 1.2` 
-See note above about [SOCKS proxy support](#checking-socks-proxies-only-in-version-1.2).
-
-Same principal applies to big lists (multi-threaded checking).
- 
 
 
 
 
-## Version Information
-### Upcoming versions
-**Version 1.3** *(Estimated release date : Unknown)*
-- Will have a version supporting includes (as a library)
-- Finally adding proxy annonimity tests
-- Adding multi-threading without the need for file includes (GET arrays)
-- Possibly support for other file formats
-
-### Changelogs for currently active versions
-**Version 1.2 `NEW`** *(Fixes & Updates to Version 1.1)*
-- Now supporting SOCKS4/5 proxies!
-- Added proxy type field in outputted JSON
-- All proxy checking scripts have been updated, and some bugs have been fixed
-
-**Version 1.1** *(Updated from Version 1.0)*
-- Dropped command-line support, now using a browser-approach (GET Requests)
-- Switched to stable and working methods (100% accurate proxy checks)
-- Increased speed and multi-threading ability
-- Added support for checking single proxies individually
-- You can now specify a custom `timeout`
-
-### All Version References
-Version number | Working | Bug Rating | Documentation
------------ | ----------- | ----------- | -----------
-Version 1.2 | Yes | Moderate | [Top of page](#)
-Version 1.1 | Yes | Stable | [Top of page](#)
-Version 1.0 | N/A | No Support | [Old Docs](https://github.com/samuel-allan/FastProxyChecker/blob/master/Version%201/Documentation)
-
-### Current flaws in 1.2
-- Sometimes regards dead HTTP(S) proxies as SOCKS4/5 proxies
 
 ### Current flaws in 1.1
-- Can't handle SOCKS proxies (Returns operation timed out error) [Fixed in 1.2](#changelogs-for-currently-active-versions)
+- Can't handle SOCKS proxies (Returns operation timed out error)
+_No bugs present yet_
 
 ### Credits
 

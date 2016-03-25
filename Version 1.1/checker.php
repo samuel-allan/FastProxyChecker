@@ -21,34 +21,13 @@
 	//Another way to use this script is to supply a filename (e.g. checker.php?file=somefile.txt)
 	//To determine whether we are being supplied an ip-port or a filename, we'll take a look at the get params
 	
-    
 	//Step 1 - Check whether the user specified a timeout
 	if(!isset($_GET['timeout']))
 	{
 		die("You must specify a timeout in seconds in your request (checker.php?...&timeout=20)");
 	}
-    
-    //Step 2 - Little extras go here 
-    //Default is 'false' not to confuse the IF-logic later on
-    $socksOnly = false;
-    if(isset($_GET['proxy_type']))
-    {
-        if($_GET['proxy_type'] == "socks")
-        {
-            $socksOnly = true;
-            $proxy_type = "socks";
-        }
-        else
-        {
-            $proxy_type = "http(s)";
-        }
-    }
-    else
-    {
-        $proxy_type = "http(s)";
-    }
 
-	//Step 3 - Go through a loop to determine what the user wants us to do
+	//Step 2 - Go through a loop to determine what the user wants us to do
 	if(isset($_GET['file']))
 	{
 		//If we can't find the file, complain
@@ -59,11 +38,11 @@
 		
 		//Convert the file to a list of proxies
 		$array = file($_GET['file']);
-		CheckMultiProxy($array, $_GET['timeout'], $proxy_type);
+		CheckMultiProxy($array, $_GET['timeout']);
 	}
 	else if(isset($_GET['ip']) && isset($_GET['port']))
 	{
-		CheckSingleProxy($_GET['ip'], $_GET['port'], $_GET['timeout'], true, $socksOnly, $proxy_type);
+		CheckSingleProxy($_GET['ip'], $_GET['port'], $_GET['timeout']);
 	}
 	else
 	{
@@ -72,14 +51,14 @@
 	
 	
      
-    function CheckMultiProxy($proxies, $timeout, $proxy_type)
+    function CheckMultiProxy($proxies, $timeout)
 	{
 		$data = array();
 		foreach($proxies as $proxy)
 		{
 			$parts = explode(':', trim($proxy));
 			$url = strtok(curPageURL(),'?');
-			$data[] = $url . '?ip=' . $parts[0] . "&port=" . $parts[1] . "&timeout=" . $timeout . "&proxy_type=" . $proxy_type;
+			$data[] = $url . '?ip=' . $parts[0] . "&port=" . $parts[1] . "&timeout=" . $timeout;
 		}
 		$results = multiRequest($data);
 		$holder = array();
@@ -94,7 +73,7 @@
      
 	 
 	 
-	 function CheckSingleProxy($ip, $port, $timeout, $echoResults=true, $socksOnly=false, $proxy_type="http(s)")
+	 function CheckSingleProxy($ip, $port, $timeout, $echoResults=true)
 	 {
 		$passByIPPort= $ip . ":" . $port;
 		 
@@ -110,12 +89,6 @@
 		curl_setopt($theHeader, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($theHeader, CURLOPT_TIMEOUT, $timeout);
 		curl_setopt($theHeader, CURLOPT_PROXY, $passByIPPort);
-        
-        //If only socks proxy checking is enabled, use this below.
-        if($socksOnly)
-        {
-            curl_setopt($theHeader, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
-        }
 		
 		//This is not another workaround, it's just to make sure that if the IP uses some god-forgotten CA we can still work with it ;)
 		//Plus no security is needed, all we are doing is just 'connecting' to check whether it exists!
@@ -126,27 +99,24 @@
 		$curlResponse = curl_exec($theHeader);
 		 
 		 
+		 
 		if ($curlResponse === false) 
 		{
-            //If we get a 'connection reset' there's a good chance it's a SOCKS proxy
-            //Just as a safety net though, I'm still aborting if $socksOnly is true (i.e. we were initially checking for a socks-specific proxy)
-            if(curl_errno($theHeader) == 56 && !$socksOnly)
-            {
-                CheckSingleProxy($ip, $port, $timeout, $echoResults, true, "socks");
-                return;
-            }
-            
-            $arr = array(
-                    "result" => array(
-                        "success" => false,
-                        "error" => curl_error($theHeader),
-                        "proxy" => array(
-                            "ip" => $ip,
-                            "port" => $port,
-                            "type" => $proxy_type
-                    )
-                )
-            );
+			$arr = array(
+				"result" => array(
+					"success" => false,
+					"error" => curl_error($theHeader),
+					"proxy" => array(
+						"ip" => $ip,
+						"port" => $port
+					)
+				)
+			);
+			if($echoResults)
+			{ 
+				echo json_encode($arr);
+			}
+			return $arr;
 		} 
 		else 
 		{
@@ -156,17 +126,17 @@
 					"proxy" => array(
 						"ip" => $ip,
 						"port" => $port,
-						"speed" => floor((microtime(true) - $loadingtime)*1000),
-                        "type" => $proxy_type
+						"speed" => floor((microtime(true) - $loadingtime)*1000)
 					)
 				)
 			);
+
+			if($echoResults)
+			{ 
+				echo json_encode($arr);
+			}
+			return $arr;
 		}
-        if($echoResults)
-        { 
-            echo json_encode($arr);
-        }
-        return $arr;
 	 }
 	 function multiRequest($data, $options = array()) 
 	 {
@@ -238,4 +208,4 @@ function curPageURL() {
     }
     return $pageURL;
 }	
-?>
+	 ?>
