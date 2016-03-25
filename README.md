@@ -1,5 +1,5 @@
 #Fast Proxy Checker Script
-*(Short Notice 12/22/15): Some errors have been occuring with checking proxies in the recent version lately, so hopefully some fixes are comming along soon enough.*
+*(Short Notice 3/25/3016): Finally a review/fix hopefully coming along this week, if you desire any special features in the new version make sure to notify me beforehand.*
 
 ##How to use
 The current latest and greatest version on the stack is 1.1 (I don't suggest using 1.0 because it's slow and uses very old techniques).
