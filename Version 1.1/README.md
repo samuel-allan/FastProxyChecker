@@ -1,4 +1,4 @@
-# Fast Proxy Checker Script
+# Version 1.1 Docs
 *(Short Notice 3/25/3016): Version 1.2 is available, and should be stable enough to use by the end of March. I recommend everyone in need of SOCKS proxy support to upgrade to version 1.2
 
 ## How to use
