@@ -192,9 +192,9 @@ Same principal applies to big lists (multi-threaded checking).
 ### All Version References
 Version number | Working | Bug Rating | Documentation
 ----------- | ----------- | ----------- | -----------
-Version 1.2 | Yes | Moderate | [Top of page](#)
-Version 1.1 | Yes | Stable | [Top of page](#)
-Version 1.0 | N/A | No Support | [Old Docs](https://github.com/samuel-allan/FastProxyChecker/blob/master/Version%201/Documentation)
+Version 1.2 | Yes | Stable | [V1.2 Release](https://github.com/samuel-allan/FastProxyChecker/tree/v1.2)
+Version 1.1 | Yes | Stable | [V1.1 Folder](https://github.com/samuel-allan/FastProxyChecker/blob/master/Version%201.1/Documentation)
+Version 1.0 | N/A | No Support | [Old Docs](https://github.com/samuel-allan/FastProxyChecker/blob/master/Version%201/Documentation.txt)
 
 ### Current flaws in 1.2
 - Sometimes regards dead HTTP(S) proxies as SOCKS4/5 proxies
