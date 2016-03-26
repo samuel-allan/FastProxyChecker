@@ -1,5 +1,5 @@
 # Fast Proxy Checker Script
-*(Announcement): Version 1.2 has finally been released, and includes new features as well as fixes and performance updates*
+*(Announcement): Version 1.2 has finally been released, and includes new features as well as fixes and performance updates [click here to go the releases page](https://github.com/samuel-allan/FastProxyChecker/releases)*
 
 ## How to use
 The current latest and most feature-rich version is 1.2, although you are free to use version 1.1 if you don't need the new features.
