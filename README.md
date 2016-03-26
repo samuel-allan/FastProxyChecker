@@ -8,6 +8,9 @@ So, currently there are two ways to check proxies:
 - Check a specific proxy (IP:PORT)
 - Check a big list of proxies simultaneously (multi-threaded approach)
 
+*Before you start using the code, you will have to grab a copy of the latest release, available [here](https://github.com/samuel-allan/FastProxyChecker/releases).
+Also note that this documentation is only related to the latest release, for other docs visit our [page](http://samuel-allan.github.io/FastProxyChecker/)*
+
 ### Checking a specific proxy
 Locate the *checker.php* script, and GET it with the parameters *ip*, *port* and *timeout*:
 
