@@ -49,7 +49,7 @@ And in the case of faliure you will get the reason why it failed (curl_error dir
 }
 ```
 
-#### Checking SOCKS Proxies `Only in Version 1.2`
+#### Checking SOCKS Proxies
 If you are using version 1.2 you will also be able to check SOCKS4/5 proxies. In version 1.2 the proxy is checked for SOCKS by default after it has partially failed a check for HTTP (Connection reset error), however knowing for sure whether it is a SOCKS proxy you are about to check or no can minimise the time it will take to process.
 
 To check the proxy for SOCKS only use the `proxy_type` GET parameter:
@@ -163,7 +163,7 @@ However, the results are going to be a bit different this time, because you've c
 As you can see from the json, it has an array of 'results' with results for each and every proxy in the list.
 
 #### SOCKS Proxy support in big lists `Only in Version 1.2` 
-See note above about [SOCKS proxy support](#checking-socks-proxies-only-in-version-12).
+See note above about [SOCKS proxy support](#checking-socks-proxies).
 
 Same principal applies to big lists (multi-threaded checking).
  
@@ -196,8 +196,8 @@ Same principal applies to big lists (multi-threaded checking).
 Version number | Working | Bug Rating | Documentation
 ----------- | ----------- | ----------- | -----------
 Version 1.2 | Yes | Stable | [V1.2 Release](https://github.com/samuel-allan/FastProxyChecker/tree/v1.2)
-Version 1.1 | Yes | Stable | [V1.1 Folder](https://github.com/samuel-allan/FastProxyChecker/blob/master/Version%201.1/Documentation)
-Version 1.0 | N/A | No Support | [Old Docs](https://github.com/samuel-allan/FastProxyChecker/blob/master/Version%201/Documentation.txt)
+Version 1.1 | Yes | Stable | [V1.1 Branch](https://github.com/samuel-allan/FastProxyChecker/tree/v1.1)
+Version 1.0 | N/A | No Support | [V1.0 Outdated](https://github.com/samuel-allan/FastProxyChecker/tree/v1.0)
 
 ### Current flaws in 1.2
 - Sometimes regards dead HTTP(S) proxies as SOCKS4/5 proxies
