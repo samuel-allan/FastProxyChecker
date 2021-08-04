@@ -49,6 +49,15 @@ And in the case of faliure you will get the reason why it failed (curl_error dir
 }
 ```
 
+### Checking Proxies with authentication
+My fork supports Proxy authentication.
+To check a proxy that requires authentication you need to pass the login and password to the request.
+This works on both SOCKS and HTTP proxies. Example:
+```
+checker.php?ip=137.116.76.252&port=3128&timeout=20&login=foo&password=bar
+```
+Currently only supported for CheckSingleProxy
+
 #### Checking SOCKS Proxies
 If you are using version 1.2 you will also be able to check SOCKS4/5 proxies. In version 1.2 the proxy is checked for SOCKS by default after it has partially failed a check for HTTP (Connection reset error), however knowing for sure whether it is a SOCKS proxy you are about to check or no can minimise the time it will take to process.
 
