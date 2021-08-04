@@ -49,14 +49,12 @@ And in the case of faliure you will get the reason why it failed (curl_error dir
 }
 ```
 
-### Checking Proxies with authentication
-My fork supports Proxy authentication.
+### Checking Proxies with Authentication
 To check a proxy that requires authentication you need to pass the login and password to the request.
 This works on both SOCKS and HTTP proxies. Example:
 ```
 checker.php?ip=137.116.76.252&port=3128&timeout=20&login=foo&password=bar
 ```
-Currently only supported for CheckSingleProxy
 
 #### Checking SOCKS Proxies
 If you are using version 1.2 you will also be able to check SOCKS4/5 proxies. In version 1.2 the proxy is checked for SOCKS by default after it has partially failed a check for HTTP (Connection reset error), however knowing for sure whether it is a SOCKS proxy you are about to check or no can minimise the time it will take to process.
@@ -76,6 +74,18 @@ To check a list of proxies contained in file `abc.txt` with a timeout of 20 seco
 ```
 localhost/checker.php?file=abc.txt&timeout=20
 ```
+
+#### Update: checking multiple proxies with a POST request
+To check multiple proxies with a POST request, you need to pass the following request body:]
+```json
+{ 
+    "timeout" : 20,
+    "proxy_type" : "http(s)",
+    "authentication" : true,
+    "proxies" : ["ip:port:login:password", "ip:port:anotherproxy:password"]
+}
+```
+This supports authentication and SOCKS proxies, based on the checkSingleProxy function.
 
 This uses multi-threading and hence instead of taking 200 seconds for 10 proxies 
 (20 secs timeout * 10 proxies), it will take roughly 30 seconds to finish.

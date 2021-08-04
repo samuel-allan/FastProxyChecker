@@ -23,13 +23,20 @@
 	
     
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+		//A new way to use the scipt : simply pass a proper object in the post body
+
 		$json = file_get_contents('php://input');
 		$data = json_decode($json);
 		$timeout = $data->timeout;
 		$proxy_type = $data->proxy_type;
 		$authentication = $data->authentication;
 		$proxies = $data->proxies;
+
+		//The structure of the function stays the same.
+		//@vasemkin
 		CheckMultiProxy($proxies, $timeout, $proxy_type, $authentication);
+
 	} else {
 
 		//Step 1 - Check whether the user specified a timeout
@@ -91,12 +98,15 @@
 		{
 			$parts = explode(':', trim($proxy));
 			$url = strtok(curPageURL(),'?');
+
+			//Authentication is optional, and an expantion to the main logic
 			if ($authentication) {
 				$data[] = $url . '?ip=' . $parts[0] . "&port=" . $parts[1] . "&login=" . $parts[2] . "&password=" . $parts[3] . "&timeout=" . $timeout . "&proxy_type=" . $proxy_type;
 			} else{
 				$data[] = $url . '?ip=' . $parts[0] . "&port=" . $parts[1] . "&timeout=" . $timeout . "&proxy_type=" . $proxy_type;
 			}
 		}
+
 		$results = multiRequest($data);
 		$holder = array();
 		foreach($results as $result)
