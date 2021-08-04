@@ -22,65 +22,91 @@
 	//To determine whether we are being supplied an ip-port or a filename, we'll take a look at the get params
 	
     
-	//Step 1 - Check whether the user specified a timeout
-	if(!isset($_GET['timeout']))
-	{
-		die("You must specify a timeout in seconds in your request (checker.php?...&timeout=20)");
-	}
-    
-    //Step 2 - Little extras go here 
-    //Default is 'false' not to confuse the IF-logic later on
-    $socksOnly = false;
-    if(isset($_GET['proxy_type']))
-    {
-        if($_GET['proxy_type'] == "socks")
-        {
-            $socksOnly = true;
-            $proxy_type = "socks";
-        }
-        else
-        {
-            $proxy_type = "http(s)";
-        }
-    }
-    else
-    {
-        $proxy_type = "http(s)";
-    }
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-	//Step 3 - Go through a loop to determine what the user wants us to do
-	if(isset($_GET['file']))
-	{
-		//If we can't find the file, complain
-		if(!file_exists($_GET['file']))
+		//A new way to use the scipt : simply pass a proper object in the post body
+
+		$json = file_get_contents('php://input');
+		$data = json_decode($json);
+		$timeout = $data->timeout;
+		$proxy_type = $data->proxy_type;
+		$authentication = $data->authentication;
+		$proxies = $data->proxies;
+
+		//The structure of the function stays the same.
+		//@vasemkin
+		CheckMultiProxy($proxies, $timeout, $proxy_type, $authentication);
+
+	} else {
+
+		//Step 1 - Check whether the user specified a timeout
+		if(!isset($_GET['timeout']))
 		{
-			die("Could not find file '" . $_GET['file'] . "'");
+			die("You must specify a timeout in seconds in your request (checker.php?...&timeout=20)");
 		}
 		
-		//Convert the file to a list of proxies
-		$array = file($_GET['file']);
-		CheckMultiProxy($array, $_GET['timeout'], $proxy_type);
-	}
-	else if(isset($_GET['ip']) && isset($_GET['port']))
-	{
-		CheckSingleProxy($_GET['ip'], $_GET['port'], $_GET['timeout'], true, $socksOnly, $proxy_type);
-	}
-	else
-	{
-		die("<h2>Could not find the required GET parameters.</h2><br /><b>To check a proxy use:</b><br /><i>checker.php?ip=...&port=...</i><br /><b>To go through a list of proxies (IP:PORT Format) use:</b><br /><i>checker.php?file=...</i>");
-	}
+		//Step 2 - Little extras go here 
+		//Default is 'false' not to confuse the IF-logic later on
+		$socksOnly = false;
+		if(isset($_GET['proxy_type']))
+		{
+			if($_GET['proxy_type'] == "socks")
+			{
+				$socksOnly = true;
+				$proxy_type = "socks";
+			}
+			else
+			{
+				$proxy_type = "http(s)";
+			}
+		}
+		else
+		{
+			$proxy_type = "http(s)";
+		}
 	
+		//Step 3 - Go through a loop to determine what the user wants us to do
+		if(isset($_GET['file']))
+		{
+			//If we can't find the file, complain
+			if(!file_exists($_GET['file']))
+			{
+				die("Could not find file '" . $_GET['file'] . "'");
+			}
+			
+			//Convert the file to a list of proxies
+			$array = file($_GET['file']);
+			CheckMultiProxy($array, $_GET['timeout'], $proxy_type, $_GET['authentication']);
+		}
+		else if(isset($_GET['ip']) && isset($_GET['port']))
+		{
+			CheckSingleProxy($_GET['ip'], $_GET['port'], $_GET['timeout'], $_GET['login'], $_GET['password'], true, $socksOnly, $proxy_type);
+		}
+		else
+		{
+			die("<h2>Could not find the required GET parameters.</h2><br /><b>To check a proxy use:</b><br /><i>checker.php?ip=...&port=...</i><br /><b>To go through a list of proxies (IP:PORT Format) use:</b><br /><i>checker.php?file=...</i>");
+		}
+		
+
+	}
 	
      
-    function CheckMultiProxy($proxies, $timeout, $proxy_type)
+    function CheckMultiProxy($proxies, $timeout, $proxy_type, $authentication=false)
 	{
 		$data = array();
 		foreach($proxies as $proxy)
 		{
 			$parts = explode(':', trim($proxy));
 			$url = strtok(curPageURL(),'?');
-			$data[] = $url . '?ip=' . $parts[0] . "&port=" . $parts[1] . "&timeout=" . $timeout . "&proxy_type=" . $proxy_type;
+
+			//Authentication is optional, and an expantion to the main logic
+			if ($authentication) {
+				$data[] = $url . '?ip=' . $parts[0] . "&port=" . $parts[1] . "&login=" . $parts[2] . "&password=" . $parts[3] . "&timeout=" . $timeout . "&proxy_type=" . $proxy_type;
+			} else{
+				$data[] = $url . '?ip=' . $parts[0] . "&port=" . $parts[1] . "&timeout=" . $timeout . "&proxy_type=" . $proxy_type;
+			}
 		}
+
 		$results = multiRequest($data);
 		$holder = array();
 		foreach($results as $result)
@@ -94,11 +120,10 @@
      
 	 
 	 
-	 function CheckSingleProxy($ip, $port, $timeout, $echoResults=true, $socksOnly=false, $proxy_type="http(s)")
+	 function CheckSingleProxy($ip, $port, $timeout, $login=null, $password=null, $echoResults=true, $socksOnly=false, $proxy_type="http(s)")
 	 {
 		$passByIPPort= $ip . ":" . $port;
-		 
-		 
+		
 		// You can use virtually any website here, but in case you need to implement other proxy settings (show annonimity level)
 		// I'll leave you with whatismyipaddress.com, because it shows a lot of info.
 		$url = "http://whatismyipaddress.com/";
@@ -110,6 +135,13 @@
 		curl_setopt($theHeader, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($theHeader, CURLOPT_TIMEOUT, $timeout);
 		curl_setopt($theHeader, CURLOPT_PROXY, $passByIPPort);
+
+		//Basic proxy authentication support by @vasemkin
+		if($login && $password) {
+			$proxyAuth = $login . ":" . $password;
+			curl_setopt($theHeader, CURLOPT_PROXYAUTH, CURLAUTH_BASIC);
+			curl_setopt($theHeader, CURLOPT_PROXYUSERPWD, $proxyAuth);
+		}
         
         //If only socks proxy checking is enabled, use this below.
         if($socksOnly)
@@ -132,7 +164,7 @@
             //Just as a safety net though, I'm still aborting if $socksOnly is true (i.e. we were initially checking for a socks-specific proxy)
             if(curl_errno($theHeader) == 56 && !$socksOnly)
             {
-                CheckSingleProxy($ip, $port, $timeout, $echoResults, true, "socks");
+                CheckSingleProxy($ip, $port, $timeout, $login, $password, $echoResults, true, "socks");
                 return;
             }
             
