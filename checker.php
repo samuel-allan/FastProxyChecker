@@ -63,7 +63,7 @@
 	}
 	else if(isset($_GET['ip']) && isset($_GET['port']))
 	{
-		CheckSingleProxy($_GET['ip'], $_GET['port'], $_GET['timeout'], true, $socksOnly, $proxy_type);
+		CheckSingleProxy($_GET['ip'], $_GET['port'], $_GET['timeout'], $_GET['login'], $_GET['password'], true, $socksOnly, $proxy_type);
 	}
 	else
 	{
@@ -94,11 +94,10 @@
      
 	 
 	 
-	 function CheckSingleProxy($ip, $port, $timeout, $echoResults=true, $socksOnly=false, $proxy_type="http(s)")
+	 function CheckSingleProxy($ip, $port, $timeout, $login=null, $password=null, $echoResults=true, $socksOnly=false, $proxy_type="http(s)")
 	 {
 		$passByIPPort= $ip . ":" . $port;
-		 
-		 
+		
 		// You can use virtually any website here, but in case you need to implement other proxy settings (show annonimity level)
 		// I'll leave you with whatismyipaddress.com, because it shows a lot of info.
 		$url = "http://whatismyipaddress.com/";
@@ -110,6 +109,13 @@
 		curl_setopt($theHeader, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($theHeader, CURLOPT_TIMEOUT, $timeout);
 		curl_setopt($theHeader, CURLOPT_PROXY, $passByIPPort);
+
+		//Basic proxy authentication support by @vasemkin
+		if($login && $password) {
+			$proxyAuth = $login . ":" . $password;
+			curl_setopt($theHeader, CURLOPT_PROXYAUTH, CURLAUTH_BASIC);
+			curl_setopt($theHeader, CURLOPT_PROXYUSERPWD, $proxyAuth);
+		}
         
         //If only socks proxy checking is enabled, use this below.
         if($socksOnly)
@@ -132,7 +138,7 @@
             //Just as a safety net though, I'm still aborting if $socksOnly is true (i.e. we were initially checking for a socks-specific proxy)
             if(curl_errno($theHeader) == 56 && !$socksOnly)
             {
-                CheckSingleProxy($ip, $port, $timeout, $echoResults, true, "socks");
+                CheckSingleProxy($ip, $port, $timeout, $login, $password, $echoResults, true, "socks");
                 return;
             }
             
